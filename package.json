@@ -2,7 +2,7 @@
   "name": "compeller",
   "description": "A strong typescript binding for your OpenAPI Schema that doesn't need generation.",
   "version": "1.0.1-1",
-  "author": "Simon Reilly",
+  "author": "simonreilly",
   "homepage": "https://github.com/simonireilly/compeller",
   "repository": {
     "url": "https://github.com/simonireilly/compeller"
