@@ -1,14 +1,14 @@
-# Compel
+# Compeller
 
 A strong typescript binding for your OpenAPI Schema that doesn't need generation.
 
-- [Compel](#compel)
+- [Compeller](#compeller)
   - [About](#about)
   - [Shoulders](#shoulders)
 
 ## About
 
-Compel tries to infer your OpenAPI validations and responses, from a typed OpenAPI specification.
+Compeller tries to infer your OpenAPI validations and responses, from a typed OpenAPI specification.
 
 Say you had the following specification:
 
@@ -52,7 +52,7 @@ With compel you can compile this into a typed request and response handler like:
 
 ```ts
 import {openAPISpec} from './spec';
-const stuff = APICompiler(spec);
+const stuff = compeller(spec);
 
 const { response } = stuff('/test', 'get');
 

@@ -1,3 +1,8 @@
 {
-  "extends": "@tsconfig/node14"
+  "extends": "@tsconfig/node14",
+  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": true
+  }
 }

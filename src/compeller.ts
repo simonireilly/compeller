@@ -14,7 +14,7 @@ import { OpenAPIObject } from 'openapi3-ts';
  * @default 'application/json'
  * @returns
  */
-export const APICompiler = <
+export const compeller = <
   T extends OpenAPIObject,
   U extends string = 'application/json'
 >(
@@ -45,17 +45,20 @@ export const APICompiler = <
     const validateRequestBody = <
       SC extends T['paths'][P][M]['requestBody']['content'][U]['schema']
     >() => {
-      const { requestBody } = spec.paths[path][method];
+      const {
+        requestBody: {
+          content: { [contentType]: { schema = undefined } = {} } = {},
+        } = {},
+      } = spec.paths[path][method];
+
+      const unsafeSchema = schema as JSONSchemaType<FromSchema<SC>>;
 
       const ajv = new Ajv({
         allErrors: true,
       });
 
-      if (requestBody) {
-        const schema = requestBody.content[contentType]
-          .schema as JSONSchemaType<FromSchema<SC>>;
-
-        return ajv.compile(schema);
+      if (unsafeSchema) {
+        return ajv.compile(unsafeSchema);
       } else {
         return ajv.compile({});
       }
