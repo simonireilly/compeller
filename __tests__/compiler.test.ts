@@ -1,5 +1,4 @@
-import { OpenAPIObject, SchemaObject } from 'openapi3-ts';
-import { APICompiler } from './../lib/compiler';
+import { APICompiler } from '../src';
 
 const spec = {
   info: {

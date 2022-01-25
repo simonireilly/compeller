@@ -1,5 +1,5 @@
 import { OpenAPISpecification } from './openapi/spec';
-import { APICompiler } from '../../../lib/compiler';
+import { APICompiler } from '../../../src';
 
 const API = APICompiler(OpenAPISpecification);
 const { response, request } = API('/pets', 'post');
