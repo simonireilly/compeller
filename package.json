@@ -37,7 +37,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --build",
-    "canary": "release-it minor --preRelease=beta --npm.skipChecks",
+    "canary": "release-it patch --preRelease=beta --npm.skipChecks",
     "clean": "tsc --build --clean",
     "prepack": "yarn clean && yarn build",
     "prepare": "husky install",
