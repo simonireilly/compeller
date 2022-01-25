@@ -1,23 +1,12 @@
 {
   "name": "compeller",
+  "description": "A strong typescript binding for your OpenAPI Schema that doesn't need generation.",
   "version": "1.0.1-1",
-  "description": "",
-  "main": "dist/index.js",
-  "scripts": {
-    "test": "jest",
-    "build": "tsc --build",
-    "clean": "tsc --build --clean",
-    "prepare": "husky install",
-    "prepack": "yarn clean && yarn build",
-    "canary": "yarn publish --prerelease --dist-tag canary"
+  "author": "Simon Reilly",
+  "homepage": "https://github.com/simonireilly/compeller",
+  "repository": {
+    "url": "https://github.com/simonireilly/compeller"
   },
-  "keywords": [],
-  "author": "simon",
-  "files": [
-    "dist/**/*",
-    "README.md"
-  ],
-  "license": "ISC",
   "dependencies": {
     "ajv": "^8.9.0",
     "json-schema-to-ts": "^1.6.5",
@@ -30,7 +19,29 @@
     "@types/jest": "^27.4.0",
     "husky": "^7.0.0",
     "jest": "^27.4.7",
+    "release-it": "^14.12.4",
     "ts-jest": "^27.1.3",
     "typescript": "^4.5.5"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
+  "keywords": [
+    "openapi",
+    "typescript",
+    "schema",
+    "json"
+  ],
+  "license": "ISC",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "canary": "release-it minor --preRelease=beta --npm.skipChecks",
+    "clean": "tsc --build --clean",
+    "prepack": "yarn clean && yarn build",
+    "prepare": "husky install",
+    "release": "release-it",
+    "test": "jest"
   }
 }
