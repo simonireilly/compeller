@@ -43,5 +43,8 @@
     "prepare": "husky install",
     "release": "release-it",
     "test": "jest"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
