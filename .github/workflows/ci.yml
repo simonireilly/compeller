@@ -26,3 +26,5 @@ jobs:
       - run: yarn
 
       - run: yarn test
+
+      - run: yarn pack

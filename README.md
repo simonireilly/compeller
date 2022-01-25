@@ -59,7 +59,7 @@ const { response } = stuff('/test', 'get');
 const resp = response('200', { name: 'Type-safe reply' });
 ```
 
-Compel will tell you want `statusCode`'s are acceptable for the path, and it will bind the response body type to that `statusCode`.
+Compeller will tell you what combinations of status codes and bodies are compatible when building responses.
 
 When you need to make changes, you will be compelled to keep them in your central `spec.ts` file, maintaining parity between your OpenAPI and your code.
 
