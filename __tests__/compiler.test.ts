@@ -41,7 +41,7 @@ describe('API Compiler tests', () => {
 
       const { response } = stuff('/test', 'get');
 
-      const resp = response('200', { name: 'Simon' });
+      const resp = response('200', { name: 'Type-safe reply' });
 
       expect(resp).toEqual({});
     });
