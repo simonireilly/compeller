@@ -1,4 +1,4 @@
-import { APICompiler } from '../src';
+import { compeller } from '../src';
 
 const spec = {
   info: {
@@ -36,7 +36,7 @@ const spec = {
 describe('API Compiler tests', () => {
   describe('get requests', () => {
     it('requires a valid API document', () => {
-      const stuff = APICompiler(spec);
+      const stuff = compeller(spec);
 
       const { response } = stuff('/test', 'get');
 

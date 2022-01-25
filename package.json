@@ -1,5 +1,5 @@
 {
-  "name": "combined",
+  "name": "compeller",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -7,10 +7,15 @@
     "test": "jest",
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepack": "yarn clean && yarn build"
   },
   "keywords": [],
   "author": "simon",
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
   "license": "ISC",
   "dependencies": {
     "ajv": "^8.9.0",

@@ -1,7 +1,7 @@
 import { OpenAPISpecification } from './openapi/spec';
-import { APICompiler } from '../../../src';
+import { compeller } from '../../../src';
 
-const API = APICompiler(OpenAPISpecification);
+const API = compeller(OpenAPISpecification);
 const { response, request } = API('/pets', 'post');
 
 export const handler = (data: Record<string, unknown>) => {
