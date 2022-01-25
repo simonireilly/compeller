@@ -45,13 +45,20 @@ export const APICompiler = <
     const validateRequestBody = <
       SC extends T['paths'][P][M]['requestBody']['content'][U]['schema']
     >() => {
-      const requestSchema = spec.paths[path][method]['requestBody']['content'][
-        contentType
-      ]['schema'] as JSONSchemaType<FromSchema<SC>>;
+      const { requestBody } = spec.paths[path][method];
+
       const ajv = new Ajv({
         allErrors: true,
       });
-      return ajv.compile(requestSchema);
+
+      if (requestBody) {
+        const schema = requestBody.content[contentType]
+          .schema as JSONSchemaType<FromSchema<SC>>;
+
+        return ajv.compile(schema);
+      } else {
+        return ajv.compile({});
+      }
     };
 
     const validator = validateRequestBody();
