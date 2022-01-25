@@ -8,7 +8,8 @@
     "build": "tsc --build",
     "clean": "tsc --build --clean",
     "prepare": "husky install",
-    "prepack": "yarn clean && yarn build"
+    "prepack": "yarn clean && yarn build",
+    "canary": "yarn publish --prerelease --dist-tag canary"
   },
   "keywords": [],
   "author": "simon",
