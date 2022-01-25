@@ -43,7 +43,10 @@ describe('API Compiler tests', () => {
 
       const resp = response('200', { name: 'Type-safe reply' });
 
-      expect(resp).toEqual({});
+      expect(resp).toEqual({
+        body: '{"name":"Type-safe reply"}',
+        statusCode: '200',
+      });
     });
   });
 });
