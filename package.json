@@ -39,7 +39,6 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --build",
-    "pub:pr": "release-it patch --preRelease=pr",
     "pub:canary": "release-it patch --preRelease=beta",
     "pub:main": "release-it patch",
     "clean": "tsc --build --clean",
@@ -51,6 +50,6 @@
     "test": "jest"
   },
   "publishConfig": {
-    "simonireilly:registry": "https://npm.pkg.github.com/"
+    "registry": "https://registry.npmjs.org/"
   }
 }
