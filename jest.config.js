@@ -4,7 +4,7 @@ module.exports = {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
   testEnvironment: 'node',
-  modulePathIgnorePatterns: ['<rootDir>/.*/fixtures/'],
+  modulePathIgnorePatterns: ['<rootDir>/.*/fixtures/', '<rootDir>/example/*'],
   moduleNameMapper: {
     '^compeller/(.*)$': '<rootDir>/src/$1',
   },
