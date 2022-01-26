@@ -42,6 +42,6 @@ jobs:
           cache: "yarn"
       - run: yarn
 
-      - run: yarn canary
+      - run: yarn canary --dry-run
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
