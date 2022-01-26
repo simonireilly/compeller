@@ -1,7 +1,7 @@
 {
   "name": "compeller",
   "description": "A strong typescript binding for your OpenAPI Schema that doesn't need generation.",
-  "version": "0.0.0-beta.0",
+  "version": "0.0.1",
   "author": "simonreilly",
   "homepage": "https://github.com/simonireilly/compeller",
   "repository": {
@@ -39,7 +39,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --build",
-    "canary": "release-it patch --preRelease=alpha",
+    "pub:pr": "release-it patch --preRelease=pr",
+    "pub:canary": "release-it patch --preRelease=beta",
+    "pub:main": "release-it patch",
     "clean": "tsc --build --clean",
     "embed": "embedme ./README.md",
     "example": "hygen compeller new --directory example",
@@ -49,6 +51,6 @@
     "test": "jest"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://npm.pkg.github.com/"
   }
 }
