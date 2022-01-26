@@ -16,34 +16,52 @@ Compeller tries to infer your OpenAPI validations and responses, from a typed Op
 
 ### Usage
 
-Say you had the following specification:
+Create a Schema specification with :
 
 ```ts
-// ./spec.ts
-const openAPISpec = {
+import { FromSchema } from 'json-schema-to-ts';
+
+export const PetSchema = {
+  type: 'object',
+  required: ['age', 'name'],
+  additionalProperties: false,
+  properties: {
+    name: {
+      type: 'string',
+      minLength: 3,
+      maxLength: 12,
+    },
+    age: {
+      type: 'number',
+      maximum: 120,
+      minimum: 0,
+    },
+  },
+} as const;
+
+export type Pet = FromSchema<typeof PetSchema>;
+```
+
+Next, create a top level document:
+
+```ts
+import { PetSchema } from './schemas/pet.schema';
+
+export const OpenAPISpecification = {
   info: {
-    title: 'Test API',
+    title: 'AJV Schema Example',
     version: '1.0.0',
   },
   openapi: '3.1.0',
   paths: {
-    '/test': {
+    '/pet': {
       get: {
         responses: {
           '200': {
-            description: 'Test response',
+            description: 'Get the pet',
             content: {
               'application/json': {
-                schema: {
-                  type: 'object',
-                  properties: {
-                    name: {
-                      type: 'string',
-                    },
-                  },
-                  additionalProperties: false,
-                  required: ['name'],
-                } as const,
+                schema: PetSchema,
               },
             },
           },
@@ -57,10 +75,10 @@ const openAPISpec = {
 With compel you can compile this into a typed request and response handler like:
 
 ```ts
-import {openAPISpec} from './spec';
-const stuff = compeller(spec);
+import { openAPISpec } from './spec';
+const api = compeller(spec);
 
-const { response } = stuff('/test', 'get');
+const { response } = api('/test', 'get');
 
 const resp = response('200', { name: 'Type-safe reply' });
 ```

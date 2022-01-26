@@ -1,20 +1,23 @@
-import { PetSchema } from './schemas/pet.schema';
+---
+to: <%= directory %>/openapi/spec.ts
+---
+import { VersionSchema } from './schemas/version.schema';
 
 export const OpenAPISpecification = {
   info: {
-    title: 'AJV Schema Example',
+    title: '<%= title %>',
     version: '1.0.0',
   },
   openapi: '3.1.0',
   paths: {
-    '/pet': {
+    'v1//version': {
       get: {
         responses: {
           '200': {
-            description: 'Get the pet',
+            description: 'Get the current API version',
             content: {
               'application/json': {
-                schema: PetSchema,
+                schema: VersionSchema,
               },
             },
           },
@@ -23,3 +26,6 @@ export const OpenAPISpecification = {
     },
   },
 };
+
+
+
