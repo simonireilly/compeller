@@ -39,7 +39,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --build",
-    "canary": "release-it patch --preRelease=alpha",
+    "pub:pr": "release-it patch --preRelease=pr",
+    "pub:canary": "release-it patch --preRelease=beta",
     "clean": "tsc --build --clean",
     "embed": "embedme ./README.md",
     "example": "hygen compeller new --directory example",
