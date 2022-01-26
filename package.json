@@ -50,6 +50,6 @@
     "test": "jest"
   },
   "publishConfig": {
-    "simonireilly:registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/"
   }
 }
