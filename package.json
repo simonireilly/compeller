@@ -1,7 +1,7 @@
 {
   "name": "compeller",
   "description": "A strong typescript binding for your OpenAPI Schema that doesn't need generation.",
-  "version": "1.0.2-beta.0",
+  "version": "0.0.0-beta.0",
   "author": "simonreilly",
   "homepage": "https://github.com/simonireilly/compeller",
   "repository": {
@@ -37,7 +37,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --build",
-    "canary": "release-it patch --preRelease=beta --npm.skipChecks",
+    "canary": "release-it patch --preRelease=alpha --npm.skipChecks",
     "clean": "tsc --build --clean",
     "prepack": "yarn clean && yarn build",
     "prepare": "husky install",
