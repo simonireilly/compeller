@@ -1,43 +1,72 @@
+![Compeller basic logo](./assets/logo.drawio.svg)
 # Compeller
 
 A strong typescript binding for your OpenAPI Schema that doesn't need generation.
 
 - [Compeller](#compeller)
   - [About](#about)
+  - [Get started](#get-started)
+    - [Usage](#usage)
   - [Shoulders](#shoulders)
 
 ## About
 
 Compeller tries to infer your OpenAPI validations and responses, from a typed OpenAPI specification.
 
-Say you had the following specification:
+## Get started
+
+You can use the CLI to start a new project, generating an OpenAPI specification.
+
+```bash
+npx compeller new
+```
+
+### Usage
+
+Create a Schema specification for an API Model like:
 
 ```ts
-// ./spec.ts
-const openAPISpec = {
+// ./example/openapi/schemas/version.schema.ts
+
+import { FromSchema } from 'json-schema-to-ts';
+
+export const VersionSchema = {
+  type: 'object',
+  required: ['version'],
+  additionalProperties: false,
+  properties: {
+    version: {
+      type: 'string',
+    },
+  },
+} as const;
+
+export type Version = FromSchema<typeof VersionSchema>;
+
+```
+
+Next, bind the model into an OpenAPI specification object.
+
+```ts
+// ./example/openapi/spec.ts
+
+import { VersionSchema } from './schemas/version.schema';
+
+export const OpenAPISpecification = {
   info: {
-    title: 'Test API',
+    title: 'New API generated with compeller',
     version: '1.0.0',
   },
   openapi: '3.1.0',
   paths: {
-    '/test': {
+    'v1//version': {
       get: {
         responses: {
           '200': {
-            description: 'Test response',
+            description: 'Get the current API version',
             content: {
               'application/json': {
-                schema: {
-                  type: 'object',
-                  properties: {
-                    name: {
-                      type: 'string',
-                    },
-                  },
-                  additionalProperties: false,
-                  required: ['name'],
-                } as const,
+                schema: VersionSchema,
               },
             },
           },
@@ -48,20 +77,20 @@ const openAPISpec = {
 };
 ```
 
-With compel you can compile this into a typed request and response handler like:
+With compeller you can compile this into a typed request and response handler like:
 
 ```ts
-import {openAPISpec} from './spec';
-const stuff = compeller(spec);
+import { OpenAPISpecification } from './spec';
 
-const { response } = stuff('/test', 'get');
+// The api is inferred, and validations are generated
+const api = compeller(OpenAPISpecification);
 
+// These routes and methods are enforced
+const { response } = api('/v1/version', 'get');
+
+// The response code and body schema are bound
 const resp = response('200', { name: 'Type-safe reply' });
 ```
-
-Compeller will tell you what combinations of status codes and bodies are compatible when building responses.
-
-When you need to make changes, you will be compelled to keep them in your central `spec.ts` file, maintaining parity between your OpenAPI and your code.
 
 ## Shoulders
 

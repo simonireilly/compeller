@@ -1,0 +1,42 @@
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="760px" height="200px" viewBox="-0.5 -0.5 760 200" content="&lt;mxfile&gt;&lt;diagram id=&quot;3A46gxZ-959yfGv-zco6&quot; name=&quot;Page-1&quot;&gt;rZRNc4IwEIZ/DXcgFvFYqbaX9uKh55SskDGwTIhF++ubwMqH6EzbKQcmed9dk91n0WNJcXrWvMpfUYDyQl+cPPbkheHqIbZvJ5w74WEVdUKmpeikYBB28gtI9Ek9SgH1JNAgKiOrqZhiWUJqJhrXGptp2B7V9NSKZzATdilXc/VdCpN3ahwuB/0FZJZfTg6iVecU/BJMldQ5F9iMJLbxWKIRTbcqTgko17tLX7q87R23v5iG0vwogXUZn1wdqTi6mDlfqtV4LAW4hMBj6yaXBnYVT53bWLxWy02hyO4L8u0mU7yuaV0fwKQ5bfZYmi0vpHIDkOBRS9D20DdoyCTmi9hlGo2HvtFtulQqQYW6vSATHOJ92keOnCiN4WNvHaoStIHT3VYFPQA7uIAFGH22IZSwIGTn6bYZBmAZkZaP4Ic+iZyGLut/eeBiF4TmNqbljFKCRWVjXNuucNkKzZQJVzIr7Tq1ldoEtnZ9kHacH8kopBAu/SbcAb9/zffvTMeT0Xp0/4D2I4Z++/wPwzCeQgyCOcU+Zkwx+j1Eux2+49Yb/RmyzTc=&lt;/diagram&gt;&lt;/mxfile&gt;">
+    <defs>
+        <style type="text/css">
+            /* latin */
+@font-face {
+  font-family: 'Architects Daughter';
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/architectsdaughter/v11/KtkxAKiDZI_td1Lkx62xHZHDtgO_Y-bvTYlg4w.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+        </style>
+    </defs>
+    <g>
+        <rect x="0" y="0" width="760" height="200" rx="30" ry="30" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/>
+        <rect x="240" y="70" width="280" height="60" fill="none" stroke="none" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 278px; height: 1px; padding-top: 100px; margin-left: 241px;">
+                        <div data-drawio-colors="color: #000000; " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 48px; font-family: &quot;Courier New&quot;; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; overflow-wrap: normal;">
+                                Compeller
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="380" y="114" fill="#000000" font-family="Courier New" font-size="48px" text-anchor="middle" font-weight="bold">
+                    Compeller
+                </text>
+            </switch>
+        </g>
+    </g>
+    <switch>
+        <g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"/>
+        <a transform="translate(0,-5)" xlink:href="https://www.diagrams.net/doc/faq/svg-export-text-problems" target="_blank">
+            <text text-anchor="middle" font-size="10px" x="50%" y="100%">
+                Viewer does not support full SVG 1.1
+            </text>
+        </a>
+    </switch>
+</svg>
