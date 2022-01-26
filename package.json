@@ -30,6 +30,7 @@
   },
   "files": [
     "dist/**/*",
+    "_templates/**/*",
     "README.md"
   ],
   "keywords": [

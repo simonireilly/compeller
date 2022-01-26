@@ -3,9 +3,12 @@
 const { runner } = require('hygen');
 const Logger = require('hygen/lib/logger');
 const path = require('path');
-const defaultTemplates = path.join(__dirname, 'templates');
 
-runner(process.argv.slice(2), {
+// These templates will be included in the package
+const defaultTemplates = path.join(__dirname, '..', '_templates');
+
+// Use compeller command always
+runner(['compeller', ...process.argv.slice(2)], {
   templates: defaultTemplates,
   cwd: process.cwd(),
   logger: new Logger(console.log.bind(console)),
