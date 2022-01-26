@@ -41,6 +41,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           cache: "yarn"
       - run: yarn pack
-      # - run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: yarn canary
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
