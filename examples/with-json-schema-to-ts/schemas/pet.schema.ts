@@ -1,6 +1,6 @@
 import { FromSchema } from 'json-schema-to-ts';
 
-export const Schema = {
+export const PetSchema = {
   type: 'object',
   required: ['age', 'name'],
   additionalProperties: false,
@@ -18,4 +18,4 @@ export const Schema = {
   },
 } as const;
 
-export type Pet = FromSchema<typeof Schema>;
+export type Pet = FromSchema<typeof PetSchema>;

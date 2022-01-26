@@ -1,14 +1,20 @@
+![Compeller basic logo](./assets/logo.drawio.svg)
 # Compeller
 
 A strong typescript binding for your OpenAPI Schema that doesn't need generation.
 
 - [Compeller](#compeller)
   - [About](#about)
+    - [Usage](#usage)
   - [Shoulders](#shoulders)
 
 ## About
 
 Compeller tries to infer your OpenAPI validations and responses, from a typed OpenAPI specification.
+
+
+
+### Usage
 
 Say you had the following specification:
 
