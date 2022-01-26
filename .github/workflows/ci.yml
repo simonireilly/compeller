@@ -1,6 +1,8 @@
 name: CI
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 
@@ -45,6 +47,6 @@ jobs:
 
       - run: yarn
 
-      - run: yarn pub:pr --dry-run
+      - run: yarn pub:canary --dry-run --npm.skipChecks
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
