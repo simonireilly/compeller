@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { compeller } from '../src';
 
 const spec = {
@@ -37,6 +38,21 @@ describe('API Compiler tests', () => {
   describe('get requests', () => {
     it('requires a valid API document', () => {
       const stuff = compeller(spec);
+
+      const { response } = stuff('/test', 'get');
+
+      const resp = response('200', { name: 'Type-safe reply' });
+
+      expect(resp).toEqual({
+        body: '{"name":"Type-safe reply"}',
+        statusCode: '200',
+      });
+    });
+
+    it('keeps a local specification json when true', () => {
+      const stuff = compeller(spec, {
+        jsonSpecFile: join(__dirname, 'tmp', 'openapi.json'),
+      });
 
       const { response } = stuff('/test', 'get');
 
