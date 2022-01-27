@@ -1,4 +1,3 @@
-![Compeller basic logo](./assets/logo.drawio.svg)
 # Compeller
 
 A strong typescript binding for your OpenAPI Schema that doesn't need generation.
