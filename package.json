@@ -51,7 +51,7 @@
     "example": "hygen compeller new --directory example",
     "prepack": "yarn clean && yarn build",
     "prepare": "husky install",
-    "pub:canary": "release-it patch --preRelease=alpha --npm.tag=alpha",
+    "pub:canary": "release-it --preRelease=alpha --npm.tag=alpha",
     "pub:main": "release-it patch",
     "release": "release-it",
     "test": "jest"
