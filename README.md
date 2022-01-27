@@ -21,6 +21,8 @@ You can use the CLI to start a new project, generating an OpenAPI specification.
 npx compeller new
 ```
 
+![how to get started with compeller](./assets/usage.gif)
+
 ### Usage
 
 Create a Schema specification for an API Model like:
