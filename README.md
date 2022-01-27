@@ -1,5 +1,7 @@
 # Compeller
 
+🚨 Alpha software 🚨
+
 A strong typescript binding for your OpenAPI Schema that doesn't need generation.
 
 - [Compeller](#compeller)
