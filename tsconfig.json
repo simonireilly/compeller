@@ -3,6 +3,8 @@
   "include": ["src/**/*.ts"],
   "compilerOptions": {
     "outDir": "./dist",
-    "declaration": true
+    "declaration": true,
+    "strict": true,
+    "incremental": true
   }
 }

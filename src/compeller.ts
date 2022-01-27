@@ -31,6 +31,14 @@ export const compeller = <
   ) => {
     const path = route as string;
 
+    /**
+     *
+     * @param statusCode The response code that the API returns
+     * @param body The JSON body for the API that is associated with that
+     * response code
+     *
+     * @returns
+     */
     const response = <
       R extends keyof S,
       SC extends T['paths'][P][M]['responses'][R]['content'][U]['schema']
@@ -42,6 +50,12 @@ export const compeller = <
       body: JSON.stringify(body),
     });
 
+    /**
+     * The request validator attaches request body validation to the request
+     * handler for a path.
+     *
+     * @returns Ajv validation function for the inferred schema
+     */
     const validateRequestBody = <
       SC extends T['paths'][P][M]['requestBody']['content'][U]['schema']
     >() => {
