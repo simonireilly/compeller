@@ -5,7 +5,4 @@ module.exports = {
   },
   testEnvironment: 'node',
   modulePathIgnorePatterns: ['<rootDir>/.*/fixtures/', '<rootDir>/example/*'],
-  moduleNameMapper: {
-    '^compeller/(.*)$': '<rootDir>/src/$1',
-  },
 };

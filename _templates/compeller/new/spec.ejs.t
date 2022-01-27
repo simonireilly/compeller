@@ -10,7 +10,7 @@ export const OpenAPISpecification = {
   },
   openapi: '3.1.0',
   paths: {
-    'v1//version': {
+    'v1/version': {
       get: {
         responses: {
           '200': {
