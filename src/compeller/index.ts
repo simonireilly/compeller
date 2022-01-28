@@ -123,17 +123,19 @@ export const compeller = <
         } = {},
       } = spec.paths[path][method];
 
-      const unsafeSchema = schema as JSONSchemaType<FromSchema<SC>>;
+      // TODO: We need to handle the request not a requestBody
+      //
+      // Some users might abstract the functional components into a generic
+      // wrapper, therefore gets might hit the validator path
+      //
+      // We don't want to loose type safety
+      const unsafeSchema = (schema || {}) as JSONSchemaType<FromSchema<SC>>;
 
       const ajv = new Ajv({
         allErrors: true,
       });
 
-      if (unsafeSchema) {
-        return ajv.compile(unsafeSchema);
-      } else {
-        return ajv.compile({});
-      }
+      return ajv.compile<FromSchema<SC>>(unsafeSchema);
     };
 
     const validator = validateRequestBody();

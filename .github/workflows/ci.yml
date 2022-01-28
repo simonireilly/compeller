@@ -25,6 +25,8 @@ jobs:
 
       - run: yarn
 
+      - run: yarn typecheck
+
       - run: yarn test
 
   publish-gpr:

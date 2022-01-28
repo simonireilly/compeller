@@ -1,5 +1,5 @@
-import { compeller } from '../../src';
-import { OpenAPISpecification } from './spec';
+import { compeller } from '../src';
+import { OpenAPISpecification } from './openapi/spec';
 
 const customerCompeller = compeller(OpenAPISpecification, {
   responder: (statusCode, body) => {
