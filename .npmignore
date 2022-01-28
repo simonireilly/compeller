@@ -7,6 +7,7 @@ __tests__
 assets
 examples
 src
+!dist/src
 tmp
 
 # Ignored file types

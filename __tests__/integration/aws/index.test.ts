@@ -1,4 +1,31 @@
-import { handler } from '../fixtures';
+import { OpenAPISpecification } from '../fixtures/openapi/spec';
+import { APIGatewayV1Responder, compeller } from '../../../src';
+
+const API = compeller(OpenAPISpecification, {
+  responder: APIGatewayV1Responder,
+});
+const { response, request } = API('/pets', 'post');
+
+export const handler = (data: Record<string, unknown>) => {
+  let body = data;
+
+  if (request.validator(body)) {
+    console.info('Type-safe object destructured from post request', {
+      name: body.name,
+    });
+
+    return response('201', {});
+  } else {
+    const { errors } = request.validator;
+
+    if (errors) {
+      return response('422', {
+        title: 'Schema validation failure for request body',
+        details: errors,
+      });
+    }
+  }
+};
 
 describe('integration tests', () => {
   it('with missing data', () => {

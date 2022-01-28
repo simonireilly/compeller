@@ -43,7 +43,8 @@
   "license": "ISC",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc --build",
+    "typecheck": "tsc",
+    "build": "tsc --project tsconfig.production.json",
     "clean": "rimraf ./dist",
     "embed": "embedme ./README.md",
     "example": "hygen compeller new --directory example",
