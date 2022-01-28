@@ -1,6 +1,8 @@
 import Ajv, { JSONSchemaType } from 'ajv';
 import { FromSchema } from 'json-schema-to-ts';
 import { OpenAPIObject } from 'openapi3-ts';
+
+import { defaultResponder } from './responders';
 import { writeSpecification } from './file-utils/write-specification';
 
 export interface ICompellerOptions {
@@ -24,10 +26,11 @@ export interface ICompellerOptions {
    * The responder formats the response of an adapter. Without a responder, the
    * statusCode and response body are returned in an object
    */
-  responder?: ({}: {
-    statusCode: string | number | symbol;
-    body: unknown;
-  }) => any;
+  responder: <T extends string | number | symbol, U>(
+    statusCode: T,
+    body: U,
+    ...args: any
+  ) => any;
 }
 
 /**
@@ -42,6 +45,7 @@ export interface ICompellerOpenAPIObject extends OpenAPIObject {}
 const DEFAULT_OPTIONS: ICompellerOptions = {
   contentType: 'application/json',
   jsonSpecFile: false,
+  responder: defaultResponder,
 };
 
 /**
@@ -63,7 +67,7 @@ export const compeller = <
   {
     contentType = 'application/json',
     jsonSpecFile = false,
-    responder,
+    responder = defaultResponder,
   }: ICompellerOptions = DEFAULT_OPTIONS
 ) => {
   if (jsonSpecFile) {
@@ -81,6 +85,8 @@ export const compeller = <
     const path = route as string;
 
     /**
+     * TODO - Responders need to handle headers
+     *
      * Build a response object for the API with the required status and body
      * format
      *
@@ -97,16 +103,12 @@ export const compeller = <
       statusCode: R,
       body: FromSchema<SC>
     ) => {
-      if (!responder)
-        return {
-          statusCode,
-          body,
-        };
-
-      return responder({ statusCode, body });
+      return responder<R, FromSchema<SC>>(statusCode, body);
     };
 
     /**
+     * TODO - Validators need to be abstracted like responders
+     *
      * The request validator attaches request body validation to the request
      * handler for a path.
      *

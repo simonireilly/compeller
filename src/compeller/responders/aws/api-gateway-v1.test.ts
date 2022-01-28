@@ -2,11 +2,8 @@ import { APIGatewayV1Responder } from './api-gateway-v1';
 
 describe('APIGatewayV1Responder', () => {
   it('maintains the API Gateway interface', () => {
-    const responder = APIGatewayV1Responder<200, { name: string }>({
-      statusCode: 200,
-      body: {
-        name: 'Simon',
-      },
+    const responder = APIGatewayV1Responder<200, { name: string }>(200, {
+      name: 'Simon',
     });
 
     expect(responder).toEqual({
@@ -16,15 +13,15 @@ describe('APIGatewayV1Responder', () => {
   });
 
   it('allows for header injection', () => {
-    const responder = APIGatewayV1Responder<200, { name: string }>({
-      statusCode: 200,
-      body: {
+    const responder = APIGatewayV1Responder<200, { name: string }>(
+      200,
+      {
         name: 'Simon',
       },
-      headers: {
+      {
         'x-sample-header': 'sample;',
-      },
-    });
+      }
+    );
 
     expect(responder).toEqual({
       statusCode: 200,

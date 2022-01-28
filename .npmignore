@@ -1,11 +1,13 @@
 # Ignored directories
-src
-tmp
-example
-.husky
-assets
 __tests__
 .github
+.husky
+.swc
+.vscode
+assets
+examples
+src
+tmp
 
 # Ignored file types
 *.tsbuildinfo

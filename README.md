@@ -29,7 +29,7 @@ npx compeller new
 Create a Schema specification for an API Model like:
 
 ```ts
-// ./example/openapi/schemas/version.schema.ts
+// ./examples/openapi/schemas/version.schema.ts
 
 import { FromSchema } from 'json-schema-to-ts';
 
@@ -51,7 +51,7 @@ export type Version = FromSchema<typeof VersionSchema>;
 Next, bind the model into an OpenAPI specification object.
 
 ```ts
-// ./example/openapi/spec.ts
+// ./examples/openapi/spec.ts
 
 import { VersionSchema } from './schemas/version.schema';
 
@@ -94,6 +94,8 @@ const { response } = api('/v1/version', 'get');
 // The response code and body schema are bound
 const resp = response('200', { name: 'Type-safe reply' });
 ```
+
+See [./examples](./examples)
 
 ## Shoulders
 

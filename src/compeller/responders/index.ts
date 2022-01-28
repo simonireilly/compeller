@@ -11,4 +11,5 @@
  * of the response but responder would still support forms of injection.
  */
 
+export * from './default';
 export * from './aws/api-gateway-v1';
