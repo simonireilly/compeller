@@ -1,2 +1,2 @@
 export { compeller } from './compeller';
-export * from './responders';
+export * from './compeller/responders';

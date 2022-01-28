@@ -7,7 +7,7 @@ export const APIGatewayV1Responder = <T, U>({
   isBase64Encoded,
   multiValueHeaders,
 }: {
-  statusCode: T extends string ? string : number;
+  statusCode: string | number | symbol;
   body: U;
 } & Omit<
   APIGatewayProxyResult,
@@ -23,8 +23,20 @@ export const APIGatewayV1Responder = <T, U>({
     };
   }
 
+  if (typeof statusCode === 'symbol')
+    throw new Error(
+      'Status codes cannot be symbols for the APIGatewayResponder'
+    );
+
+  const parsedStatusCode = parseInt(statusCode);
+
+  if (isNaN(parsedStatusCode))
+    throw new Error(
+      'Status codes cannot be symbols for the APIGatewayResponder'
+    );
+
   return {
-    statusCode: parseInt(statusCode),
+    statusCode: parsedStatusCode,
     body: JSON.stringify(body),
     headers,
     isBase64Encoded,

@@ -1,6 +1,6 @@
 import { writeFileSync } from 'fs';
 import { join } from 'path';
-import { ICompellerOpenAPIObject, ICompellerOptions } from '../compeller';
+import { ICompellerOpenAPIObject, ICompellerOptions } from '..';
 
 /**
  * Write a JSON object to file if a valid path if provided

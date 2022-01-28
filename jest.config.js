@@ -4,5 +4,9 @@ module.exports = {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },
   testEnvironment: 'node',
-  modulePathIgnorePatterns: ['<rootDir>/.*/fixtures/', '<rootDir>/example/*'],
+  modulePathIgnorePatterns: [
+    '<rootDir>/.*/fixtures/',
+    '<rootDir>/example/*',
+    '<rootDir>/dist/*',
+  ],
 };

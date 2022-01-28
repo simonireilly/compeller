@@ -57,7 +57,7 @@ export const OpenAPISpecification = {
               },
             },
           },
-          default: {
+          '422': {
             description: 'unexpected error',
             content: {
               'application/json': {
@@ -83,7 +83,7 @@ export const OpenAPISpecification = {
           '201': {
             description: 'Null response',
           },
-          default: {
+          '422': {
             description: 'unexpected error',
             content: {
               'application/json': {
@@ -119,7 +119,7 @@ export const OpenAPISpecification = {
               },
             },
           },
-          default: {
+          '422': {
             description: 'unexpected error',
             content: {
               'application/json': {

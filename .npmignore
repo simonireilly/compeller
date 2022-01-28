@@ -13,3 +13,4 @@ __tests__
 *.test.d.ts
 *.tgz
 *.json
+*.config.js
