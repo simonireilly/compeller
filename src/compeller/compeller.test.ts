@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { compeller } from '../src';
+import { compeller } from '.';
 
 const spec = {
   info: {
@@ -44,7 +44,7 @@ describe('API Compiler tests', () => {
       const resp = response('200', { name: 'Type-safe reply' });
 
       expect(resp).toEqual({
-        body: '{"name":"Type-safe reply"}',
+        body: { name: 'Type-safe reply' },
         statusCode: '200',
       });
     });
@@ -59,7 +59,7 @@ describe('API Compiler tests', () => {
       const resp = response('200', { name: 'Type-safe reply' });
 
       expect(resp).toEqual({
-        body: '{"name":"Type-safe reply"}',
+        body: { name: 'Type-safe reply' },
         statusCode: '200',
       });
     });

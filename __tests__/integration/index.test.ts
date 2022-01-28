@@ -5,10 +5,8 @@ describe('integration tests', () => {
     const data = {};
     const response = handler(data);
 
-    const parsedBody = JSON.parse(response?.body || '');
-
     expect(response?.statusCode).toEqual('default');
-    expect(parsedBody).toEqual({
+    expect(response.body).toEqual({
       details: [
         {
           instancePath: '',
@@ -31,10 +29,8 @@ describe('integration tests', () => {
     };
     const response = handler(data);
 
-    const parsedBody = JSON.parse(response?.body || '');
-
     expect(response?.statusCode).toEqual('default');
-    expect(parsedBody).toEqual({
+    expect(response.body).toEqual({
       details: [
         {
           instancePath: '',
@@ -56,9 +52,7 @@ describe('integration tests', () => {
     };
     const response = handler(data);
 
-    const parsedBody = JSON.parse(response?.body || '');
-
     expect(response?.statusCode).toEqual('201');
-    expect(parsedBody).toEqual({});
+    expect(response.body).toEqual({});
   });
 });

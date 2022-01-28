@@ -5,3 +5,7 @@ dist
 *.tgz
 
 tmp
+
+*.tsbuildinfo
+*.test.js
+*.test.d.ts
