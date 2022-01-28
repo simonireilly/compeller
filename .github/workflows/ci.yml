@@ -41,7 +41,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 14
           registry-url: https://npm.pkg.github.com/
           cache: "yarn"
 
@@ -50,3 +50,7 @@ jobs:
       - run: yarn pub:canary --dry-run --npm.skipChecks
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - uses: andresz1/size-limit-action@v1.4.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
