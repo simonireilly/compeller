@@ -24,11 +24,13 @@ export interface ICompellerOptions {
    * The responder formats the response of an adapter. Without a responder, the
    * statusCode and response body are returned in an object
    */
-  responder?: ({}: {
-    statusCode: string | number | symbol;
-    body: unknown;
-  }) => any;
+  responder?: TResponder;
 }
+
+export type TResponder<T = {}> = ({}: {
+  statusCode: string | number | symbol;
+  body: unknown;
+}) => T;
 
 /**
  * For now this is a mask on the OpenAPIObject, but later some fields will

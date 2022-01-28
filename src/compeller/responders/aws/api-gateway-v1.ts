@@ -1,6 +1,7 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
+import { ICompellerOptions, TResponder } from '../..';
 
-export const APIGatewayV1Responder = <T, U>({
+export const APIGatewayV1Responder: TResponder<APIGatewayProxyResult> = <T, U>({
   statusCode,
   body,
   headers,
