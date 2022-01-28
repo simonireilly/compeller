@@ -1,19 +1,16 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
-import { ICompellerOptions, TResponder } from '../..';
+import { ICompellerOptions } from '../..';
 
-export const APIGatewayV1Responder: TResponder<APIGatewayProxyResult> = <T, U>({
-  statusCode,
-  body,
-  headers,
-  isBase64Encoded,
-  multiValueHeaders,
-}: {
-  statusCode: string | number | symbol;
-  body: U;
-} & Omit<
-  APIGatewayProxyResult,
-  'statusCode' | 'body'
->): APIGatewayProxyResult => {
+export const APIGatewayV1Responder: ICompellerOptions['responder'] = <
+  T extends string | number | symbol,
+  U
+>(
+  statusCode: T,
+  body: U,
+  headers: APIGatewayProxyResult['headers'],
+  isBase64Encoded: APIGatewayProxyResult['isBase64Encoded'],
+  multiValueHeaders: APIGatewayProxyResult['multiValueHeaders']
+): APIGatewayProxyResult => {
   if (typeof statusCode === 'number') {
     return {
       statusCode,

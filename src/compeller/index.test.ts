@@ -1,5 +1,6 @@
 import { join } from 'path';
 import { compeller } from '.';
+import { defaultResponder } from '..';
 
 const spec = {
   info: {
@@ -52,6 +53,7 @@ describe('API Compiler tests', () => {
     it('keeps a local specification json when true', () => {
       const stuff = compeller(spec, {
         jsonSpecFile: join(__dirname, 'tmp', 'openapi.json'),
+        responder: defaultResponder,
       });
 
       const { response } = stuff('/test', 'get');

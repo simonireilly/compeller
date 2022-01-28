@@ -95,6 +95,8 @@ const { response } = api('/v1/version', 'get');
 const resp = response('200', { name: 'Type-safe reply' });
 ```
 
+See [./examples](./examples)
+
 ## Shoulders
 
 Compell is built on top of some great libraries, at it's core it relies on:
