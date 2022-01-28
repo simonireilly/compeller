@@ -20,6 +20,14 @@ export interface ICompellerOptions {
    * specification along side the compeller entity
    */
   relativePath?: string;
+  /**
+   * The responder formats the response of an adapter. Without a responder, the
+   * statusCode and response body are returned in an object
+   */
+  responder?: ({}: {
+    statusCode: string | number | symbol;
+    body: unknown;
+  }) => any;
 }
 
 /**
@@ -55,6 +63,7 @@ export const compeller = <
   {
     contentType = 'application/json',
     jsonSpecFile = false,
+    responder,
   }: ICompellerOptions = DEFAULT_OPTIONS
 ) => {
   if (jsonSpecFile) {
@@ -87,10 +96,15 @@ export const compeller = <
     >(
       statusCode: R,
       body: FromSchema<SC>
-    ) => ({
-      statusCode,
-      body: JSON.stringify(body),
-    });
+    ) => {
+      if (!responder)
+        return {
+          statusCode,
+          body,
+        };
+
+      return responder({ statusCode, body });
+    };
 
     /**
      * The request validator attaches request body validation to the request

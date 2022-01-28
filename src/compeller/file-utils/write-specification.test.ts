@@ -1,4 +1,4 @@
-import { writeSpecification } from '../../src/file-utils/write-specification';
+import { writeSpecification } from './write-specification';
 
 describe('writeSpecification', () => {
   it('with directory and not file', () => {

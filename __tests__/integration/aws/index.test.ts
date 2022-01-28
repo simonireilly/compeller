@@ -1,14 +1,12 @@
-import { handler } from './fixtures';
+import { handler } from '../fixtures';
 
 describe('integration tests', () => {
   it('with missing data', () => {
     const data = {};
     const response = handler(data);
 
-    const parsedBody = JSON.parse(response?.body || '');
-
-    expect(response?.statusCode).toEqual('default');
-    expect(parsedBody).toEqual({
+    expect(response?.statusCode).toEqual(422);
+    expect(JSON.parse(response.body)).toEqual({
       details: [
         {
           instancePath: '',
@@ -31,10 +29,8 @@ describe('integration tests', () => {
     };
     const response = handler(data);
 
-    const parsedBody = JSON.parse(response?.body || '');
-
-    expect(response?.statusCode).toEqual('default');
-    expect(parsedBody).toEqual({
+    expect(response?.statusCode).toEqual(422);
+    expect(JSON.parse(response.body)).toEqual({
       details: [
         {
           instancePath: '',
@@ -56,9 +52,7 @@ describe('integration tests', () => {
     };
     const response = handler(data);
 
-    const parsedBody = JSON.parse(response?.body || '');
-
-    expect(response?.statusCode).toEqual('201');
-    expect(parsedBody).toEqual({});
+    expect(response?.statusCode).toEqual(201);
+    expect(response.body).toEqual('{}');
   });
 });
