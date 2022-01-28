@@ -7,6 +7,7 @@ A strong typescript binding for your OpenAPI Schema that doesn't need generation
 - [Compeller](#compeller)
   - [About](#about)
   - [Get started](#get-started)
+  - [🛣️ Roadmap](#️-roadmap)
     - [Usage](#usage)
   - [Shoulders](#shoulders)
 
@@ -23,6 +24,14 @@ npx compeller new
 ```
 
 ![how to get started with compeller](./assets/usage.gif)
+
+## 🛣️ Roadmap
+
+- [x] Support for request body validation to type guard (ajv)
+- [ ] Support for response type mapping
+- [ ] Support for path validation
+- [ ] Support header validation
+- [ ] Support for header response types
 
 ### Usage
 
