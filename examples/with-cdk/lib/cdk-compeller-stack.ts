@@ -1,13 +1,9 @@
 import { HttpApi, HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha';
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
+import { HttpIamAuthorizer } from '@aws-cdk/aws-apigatewayv2-authorizers-alpha';
+
 import { CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
-import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
-import {
-  Effect,
-  Policy,
-  PolicyStatement,
-  ServicePrincipal,
-} from 'aws-cdk-lib/aws-iam';
+import { Effect, Policy, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Construct } from 'constructs';
 import { join } from 'path';
@@ -73,6 +69,7 @@ export class CdkCompellerStack extends Stack {
       path: '/v1/users',
       methods: [HttpMethod.POST],
       integration: createUserIntegration,
+      authorizer: new HttpIamAuthorizer(),
     });
 
     new CfnOutput(this, 'HTTPUrl', {

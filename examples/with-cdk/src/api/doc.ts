@@ -19,7 +19,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
   const apiDocs = apiSpec.body?.toString();
   const documentationObject = apiDocs && JSON.parse(apiDocs);
 
-  const docs = deepmerge(OpenAPISpecification, documentationObject, {
+  const docs = deepmerge(documentationObject, OpenAPISpecification, {
     clone: true,
   });
 

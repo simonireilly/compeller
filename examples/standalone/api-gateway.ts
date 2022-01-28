@@ -1,4 +1,4 @@
-import { APIGatewayV1Responder, compeller } from '../src';
+import { APIGatewayV1Responder, compeller } from '../../src';
 import { OpenAPISpecification } from './openapi/spec';
 
 const apiGatewayV1Compeller = compeller(OpenAPISpecification, {
