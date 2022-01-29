@@ -90,14 +90,13 @@ export const compeller = <
     const path = route as string;
 
     /**
-     * TODO - Responders need to handle headers
      *
      * Build a response object for the API with the required status and body
      * format
      *
      * @param statusCode The response code that the API returns
-     * @param body The JSON body for the API that is associated with that
-     * response code
+     * @param body The JSON body for the API that is associated with that response code
+     * @param headers The key, value map of the headers required for the response
      *
      * @returns
      */
@@ -111,7 +110,9 @@ export const compeller = <
           ? string
           : ResponseHeadersAlias[U]['schema']['type'] extends 'number'
           ? number
-          : boolean;
+          : ResponseHeadersAlias[U]['schema']['type'] extends 'boolean'
+          ? boolean
+          : never;
       }
     >(
       statusCode: ResponseCode,
@@ -142,12 +143,12 @@ export const compeller = <
         } = {},
       } = spec.paths[path][method];
 
-      // TODO: We need to handle the request not a requestBody
+      // TODO: We need to handle the request which do not have a requestBody
       //
       // Some users might abstract the functional components into a generic
       // wrapper, therefore gets might hit the validator path
       //
-      // We don't want to loose type safety
+      // We don't want to lose type safety
       const unsafeSchema = (schema || {}) as JSONSchemaType<FromSchema<SC>>;
 
       const ajv = new Ajv({
