@@ -1,9 +1,15 @@
 import { ICompellerOptions } from '../..';
 
-export const defaultResponder: ICompellerOptions['responder'] = <T, U>(
+export const defaultResponder: ICompellerOptions['responder'] = <T, U, V>(
   statusCode: T,
-  body: U
-) => ({
+  body: U,
+  headers?: V
+): {
+  statusCode: T;
+  body: U;
+  headers?: V;
+} => ({
   statusCode,
   body,
+  headers,
 });

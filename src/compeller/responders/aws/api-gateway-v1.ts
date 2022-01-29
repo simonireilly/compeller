@@ -3,13 +3,14 @@ import { ICompellerOptions } from '../..';
 
 export const APIGatewayV1Responder: ICompellerOptions['responder'] = <
   T extends string | number | symbol,
-  U
+  U,
+  V extends { [header: string]: string | number | boolean }
 >(
   statusCode: T,
   body: U,
-  headers: APIGatewayProxyResult['headers'],
-  isBase64Encoded: APIGatewayProxyResult['isBase64Encoded'],
-  multiValueHeaders: APIGatewayProxyResult['multiValueHeaders']
+  headers?: V,
+  isBase64Encoded?: APIGatewayProxyResult['isBase64Encoded'],
+  multiValueHeaders?: APIGatewayProxyResult['multiValueHeaders']
 ): APIGatewayProxyResult => {
   if (typeof statusCode === 'number') {
     return {

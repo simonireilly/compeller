@@ -26,9 +26,14 @@ export interface ICompellerOptions {
    * The responder formats the response of an adapter. Without a responder, the
    * statusCode and response body are returned in an object
    */
-  responder: <T extends string | number | symbol, U>(
+  responder: <
+    T extends string | number | symbol,
+    U,
+    V extends { [header: string]: string | number | boolean } = {}
+  >(
     statusCode: T,
     body: U,
+    headers?: V,
     ...args: any
   ) => any;
 }
@@ -61,7 +66,7 @@ const DEFAULT_OPTIONS: ICompellerOptions = {
  */
 export const compeller = <
   T extends ICompellerOpenAPIObject,
-  U extends string = 'application/json'
+  ContentType extends string = 'application/json'
 >(
   spec: T,
   {
@@ -75,35 +80,50 @@ export const compeller = <
   }
 
   return <
-    P extends keyof T['paths'],
-    M extends keyof T['paths'][P],
-    S extends T['paths'][P][M]['responses']
+    RequestPath extends keyof T['paths'],
+    RequestMethod extends keyof T['paths'][RequestPath],
+    Responses extends T['paths'][RequestPath][RequestMethod]['responses']
   >(
-    route: P,
-    method: M
+    route: RequestPath,
+    method: RequestMethod
   ) => {
     const path = route as string;
 
     /**
-     * TODO - Responders need to handle headers
      *
      * Build a response object for the API with the required status and body
      * format
      *
      * @param statusCode The response code that the API returns
-     * @param body The JSON body for the API that is associated with that
-     * response code
+     * @param body The JSON body for the API that is associated with that response code
+     * @param headers The key, value map of the headers required for the response
      *
      * @returns
      */
     const response = <
-      R extends keyof S,
-      SC extends T['paths'][P][M]['responses'][R]['content'][U]['schema']
+      ResponseCode extends keyof Responses,
+      ResponseSchema extends T['paths'][RequestPath][RequestMethod]['responses'][ResponseCode]['content'][ContentType]['schema'],
+      ResponseHeadersAlias extends T['paths'][RequestPath][RequestMethod]['responses'][ResponseCode]['headers'],
+      // Headers are a simple type, so we will not use FromSchema, their type will either be number, string, or boolean
+      ResponseHeaders extends {
+        [U in keyof ResponseHeadersAlias]: ResponseHeadersAlias[U]['schema']['type'] extends 'string'
+          ? string
+          : ResponseHeadersAlias[U]['schema']['type'] extends 'number'
+          ? number
+          : ResponseHeadersAlias[U]['schema']['type'] extends 'boolean'
+          ? boolean
+          : never;
+      } & { 'Content-Type': ContentType }
     >(
-      statusCode: R,
-      body: FromSchema<SC>
+      statusCode: ResponseCode,
+      body: FromSchema<ResponseSchema>,
+      headers?: ResponseHeaders
     ) => {
-      return responder<R, FromSchema<SC>>(statusCode, body);
+      return responder<
+        ResponseCode,
+        FromSchema<ResponseSchema>,
+        ResponseHeaders
+      >(statusCode, body, headers);
     };
 
     /**
@@ -115,7 +135,7 @@ export const compeller = <
      * @returns Ajv validation function for the inferred schema
      */
     const validateRequestBody = <
-      SC extends T['paths'][P][M]['requestBody']['content'][U]['schema']
+      SC extends T['paths'][RequestPath][RequestMethod]['requestBody']['content'][ContentType]['schema']
     >() => {
       const {
         requestBody: {
@@ -123,12 +143,12 @@ export const compeller = <
         } = {},
       } = spec.paths[path][method];
 
-      // TODO: We need to handle the request not a requestBody
+      // TODO: We need to handle the request which do not have a requestBody
       //
       // Some users might abstract the functional components into a generic
       // wrapper, therefore gets might hit the validator path
       //
-      // We don't want to loose type safety
+      // We don't want to lose type safety
       const unsafeSchema = (schema || {}) as JSONSchemaType<FromSchema<SC>>;
 
       const ajv = new Ajv({

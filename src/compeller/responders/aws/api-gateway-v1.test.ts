@@ -13,13 +13,19 @@ describe('APIGatewayV1Responder', () => {
   });
 
   it('allows for header injection', () => {
-    const responder = APIGatewayV1Responder<200, { name: string }>(
+    const responder = APIGatewayV1Responder<
+      200,
+      { name: string },
+      {
+        'x-sample-header': string;
+      }
+    >(
       200,
       {
         name: 'Simon',
       },
       {
-        'x-sample-header': 'sample;',
+        'x-sample-header': 'sampled;',
       }
     );
 
@@ -27,7 +33,7 @@ describe('APIGatewayV1Responder', () => {
       statusCode: 200,
       body: JSON.stringify({ name: 'Simon' }),
       headers: {
-        'x-sample-header': 'sample;',
+        'x-sample-header': 'sampled;',
       },
     });
   });

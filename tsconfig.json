@@ -1,10 +1,12 @@
 {
   "extends": "@tsconfig/node14",
-  "include": ["src/**/*.ts", "__tests__/**/*.ts"],
+  "include": ["src/**/*.ts", "__tests__/**/*.ts", "examples/**/*.ts"],
+  "exclude": ["examples/with-cdk/**/*.ts"],
   "compilerOptions": {
     "outDir": "./dist",
     "declaration": true,
     "strict": true,
-    "incremental": true
+    "incremental": true,
+    "noEmit": true
   }
 }
