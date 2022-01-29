@@ -14,6 +14,7 @@ console.info(
     {
       'x-request-id': '<uuid>',
       'x-rate-limit': 120,
+      'Content-Type': 'application/json',
     }
   )
 );

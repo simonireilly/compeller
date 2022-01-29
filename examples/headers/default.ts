@@ -11,6 +11,7 @@ const res = defaultCompeller('v1/version', 'get').response(
   {
     'x-rate-limit': 123,
     'x-request-id': 'uuid',
+    'Content-Type': 'application/json',
   }
 );
 

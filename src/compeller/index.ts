@@ -113,7 +113,7 @@ export const compeller = <
           : ResponseHeadersAlias[U]['schema']['type'] extends 'boolean'
           ? boolean
           : never;
-      }
+      } & { 'Content-Type': ContentType }
     >(
       statusCode: ResponseCode,
       body: FromSchema<ResponseSchema>,
