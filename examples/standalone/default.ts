@@ -1,4 +1,4 @@
-import { compeller } from '../src';
+import { compeller } from '../../src';
 import { OpenAPISpecification } from './openapi/spec';
 
 const defaultCompeller = compeller(OpenAPISpecification);

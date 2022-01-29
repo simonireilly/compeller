@@ -26,9 +26,14 @@ export interface ICompellerOptions {
    * The responder formats the response of an adapter. Without a responder, the
    * statusCode and response body are returned in an object
    */
-  responder: <T extends string | number | symbol, U>(
+  responder: <
+    T extends string | number | symbol,
+    U,
+    V extends { [header: string]: string | number | boolean } = {}
+  >(
     statusCode: T,
     body: U,
+    headers?: V,
     ...args: any
   ) => any;
 }
@@ -61,7 +66,7 @@ const DEFAULT_OPTIONS: ICompellerOptions = {
  */
 export const compeller = <
   T extends ICompellerOpenAPIObject,
-  U extends string = 'application/json'
+  ContentType extends string = 'application/json'
 >(
   spec: T,
   {
@@ -75,12 +80,12 @@ export const compeller = <
   }
 
   return <
-    P extends keyof T['paths'],
-    M extends keyof T['paths'][P],
-    S extends T['paths'][P][M]['responses']
+    RequestPath extends keyof T['paths'],
+    RequestMethod extends keyof T['paths'][RequestPath],
+    Responses extends T['paths'][RequestPath][RequestMethod]['responses']
   >(
-    route: P,
-    method: M
+    route: RequestPath,
+    method: RequestMethod
   ) => {
     const path = route as string;
 
@@ -97,13 +102,27 @@ export const compeller = <
      * @returns
      */
     const response = <
-      R extends keyof S,
-      SC extends T['paths'][P][M]['responses'][R]['content'][U]['schema']
+      ResponseCode extends keyof Responses,
+      ResponseSchema extends T['paths'][RequestPath][RequestMethod]['responses'][ResponseCode]['content'][ContentType]['schema'],
+      ResponseHeadersAlias extends T['paths'][RequestPath][RequestMethod]['responses'][ResponseCode]['headers'],
+      // Headers are a simple type, so we will not use FromSchema, their type will either be number, string, or boolean
+      ResponseHeaders extends {
+        [U in keyof ResponseHeadersAlias]: ResponseHeadersAlias[U]['schema']['type'] extends 'string'
+          ? string
+          : ResponseHeadersAlias[U]['schema']['type'] extends 'number'
+          ? number
+          : boolean;
+      }
     >(
-      statusCode: R,
-      body: FromSchema<SC>
+      statusCode: ResponseCode,
+      body: FromSchema<ResponseSchema>,
+      headers?: ResponseHeaders
     ) => {
-      return responder<R, FromSchema<SC>>(statusCode, body);
+      return responder<
+        ResponseCode,
+        FromSchema<ResponseSchema>,
+        ResponseHeaders
+      >(statusCode, body, headers);
     };
 
     /**
@@ -115,7 +134,7 @@ export const compeller = <
      * @returns Ajv validation function for the inferred schema
      */
     const validateRequestBody = <
-      SC extends T['paths'][P][M]['requestBody']['content'][U]['schema']
+      SC extends T['paths'][RequestPath][RequestMethod]['requestBody']['content'][ContentType]['schema']
     >() => {
       const {
         requestBody: {

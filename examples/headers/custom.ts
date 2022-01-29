@@ -16,7 +16,14 @@ const customerCompeller = compeller(OpenAPISpecification, {
 });
 
 console.info(
-  customerCompeller('v1/version', 'get').response('200', {
-    version: '1.0.0',
-  })
+  customerCompeller('v1/version', 'get').response(
+    '200',
+    {
+      version: '1.0.0',
+    },
+    {
+      'x-rate-limit': 120,
+      'x-request-id': '<uuid>',
+    }
+  )
 );
