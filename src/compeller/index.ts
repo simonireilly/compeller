@@ -1,6 +1,6 @@
 import Ajv, { JSONSchemaType } from 'ajv';
 import { FromSchema } from 'json-schema-to-ts';
-import { OpenAPIObject, PathItemObject, ResponseObject } from 'openapi3-ts';
+import { OpenAPIObject } from 'openapi3-ts';
 
 import { defaultResponder } from './responders';
 import { writeSpecification } from './file-utils/write-specification';
