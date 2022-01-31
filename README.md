@@ -1,15 +1,21 @@
 # Compeller
 
-🚨 Alpha software 🚨
+A strong typescript binding for your OpenAPI Schema that doesn't need generation, and isn't prescriptive.
 
-A strong typescript binding for your OpenAPI Schema that doesn't need generation.
+![how to get started with compeller](./assets/usage.gif)
+
 
 - [Compeller](#compeller)
+  - [🚨 Alpha software 🚨](#-alpha-software-)
   - [About](#about)
   - [Get started](#get-started)
-  - [🛣️ Roadmap](#️-roadmap)
+  - [🛣️ Road map](#️-road-map)
     - [Usage](#usage)
   - [Shoulders](#shoulders)
+
+## 🚨 Alpha software 🚨
+
+Compeller is in alpha, so it's API might change, maybe you have some thoughts?
 
 ## About
 
@@ -20,18 +26,16 @@ Compeller tries to infer your OpenAPI validations and responses, from a typed Op
 You can use the CLI to start a new project, generating an OpenAPI specification.
 
 ```bash
-npx compeller new
+npx compeller@alpha new
 ```
 
-![how to get started with compeller](./assets/usage.gif)
-
-## 🛣️ Roadmap
+## 🛣️ Road map
 
 - [x] Support for request body validation to type guard (ajv)
+- [x] Support for header response types
 - [ ] Support for response type mapping
 - [ ] Support for path validation
 - [ ] Support header validation
-- [ ] Support for header response types
 
 ### Usage
 
