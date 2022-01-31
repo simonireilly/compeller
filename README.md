@@ -1,5 +1,7 @@
 # Compeller
 
+![how to get started with compeller](./assets/usage.gif)
+
 🚨 Alpha software 🚨
 
 A strong typescript binding for your OpenAPI Schema that doesn't need generation.
@@ -22,8 +24,6 @@ You can use the CLI to start a new project, generating an OpenAPI specification.
 ```bash
 npx compeller new
 ```
-
-![how to get started with compeller](./assets/usage.gif)
 
 ## 🛣️ Roadmap
 

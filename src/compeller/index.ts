@@ -1,6 +1,6 @@
 import Ajv, { JSONSchemaType } from 'ajv';
 import { FromSchema } from 'json-schema-to-ts';
-import { OpenAPIObject } from 'openapi3-ts';
+import { OpenAPIObject, PathItemObject, ResponseObject } from 'openapi3-ts';
 
 import { defaultResponder } from './responders';
 import { writeSpecification } from './file-utils/write-specification';
@@ -82,7 +82,8 @@ export const compeller = <
   return <
     RequestPath extends keyof T['paths'],
     RequestMethod extends keyof T['paths'][RequestPath],
-    Responses extends T['paths'][RequestPath][RequestMethod]['responses']
+    Responses extends T['paths'][RequestPath][RequestMethod]['responses'],
+    Request extends T['paths'][RequestPath][RequestMethod]
   >(
     route: RequestPath,
     method: RequestMethod
@@ -102,8 +103,8 @@ export const compeller = <
      */
     const response = <
       ResponseCode extends keyof Responses,
-      ResponseSchema extends T['paths'][RequestPath][RequestMethod]['responses'][ResponseCode]['content'][ContentType]['schema'],
-      ResponseHeadersAlias extends T['paths'][RequestPath][RequestMethod]['responses'][ResponseCode]['headers'],
+      ResponseSchema extends Responses[ResponseCode]['content'][ContentType]['schema'],
+      ResponseHeadersAlias extends Responses[ResponseCode]['headers'],
       // Headers are a simple type, so we will not use FromSchema, their type will either be number, string, or boolean
       ResponseHeaders extends {
         [U in keyof ResponseHeadersAlias]: ResponseHeadersAlias[U]['schema']['type'] extends 'string'
@@ -135,7 +136,7 @@ export const compeller = <
      * @returns Ajv validation function for the inferred schema
      */
     const validateRequestBody = <
-      SC extends T['paths'][RequestPath][RequestMethod]['requestBody']['content'][ContentType]['schema']
+      SC extends Request['requestBody']['content'][ContentType]['schema']
     >() => {
       const {
         requestBody: {
