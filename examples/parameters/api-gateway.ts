@@ -6,8 +6,8 @@ const apiGatewayV1Compeller = compeller(OpenAPISpecification, {
 });
 
 console.info(
-  apiGatewayV1Compeller('v1/version', 'get').response(
-    '200',
+  apiGatewayV1Compeller('v1/users/{id}', 'post').response(
+    '201',
     {
       version: '1.0.0',
     },

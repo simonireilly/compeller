@@ -7,9 +7,18 @@ export const OpenAPISpecification = {
   },
   openapi: '3.1.0',
   paths: {
-    'v1/version': {
+    'v1/users/{id}': {
       post: {
         parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            description: 'user id to lookup',
+            required: true,
+            schema: {
+              type: 'number',
+            },
+          },
           {
             name: 'tags',
             in: 'query',

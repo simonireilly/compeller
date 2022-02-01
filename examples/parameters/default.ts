@@ -3,8 +3,8 @@ import { OpenAPISpecification } from './openapi/spec';
 
 const defaultCompeller = compeller(OpenAPISpecification);
 
-const res = defaultCompeller('v1/version', 'get').response(
-  '200',
+const res = defaultCompeller('v1/users/{id}', 'post').response(
+  '201',
   {
     version: '1.0.0',
   },

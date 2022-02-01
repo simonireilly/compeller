@@ -19,4 +19,4 @@ const body: Record<string, unknown> = {};
 const headers: Record<string, unknown> = {};
 const queryObject: Record<string, unknown> = {};
 
-console.info(customerCompeller('v1/version', 'post').request.validator({}));
+console.info(customerCompeller('v1/users/{id}', 'post').request.validator({}));
