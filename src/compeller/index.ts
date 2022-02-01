@@ -4,6 +4,7 @@ import { OpenAPIObject } from 'openapi3-ts';
 
 import { defaultResponder } from './responders';
 import { writeSpecification } from './file-utils/write-specification';
+import { requestBodyValidator } from './validators';
 
 export interface ICompellerOptions {
   /**
@@ -89,9 +90,13 @@ export const compeller = <
     method: RequestMethod
   ) => {
     const path = route as string;
+    const {
+      requestBody: {
+        content: { [contentType]: { schema = undefined } = {} } = {},
+      } = {},
+    } = spec.paths[path][method];
 
     /**
-     *
      * Build a response object for the API with the required status and body
      * format
      *
@@ -128,8 +133,6 @@ export const compeller = <
     };
 
     /**
-     * TODO - Validators need to be abstracted like responders
-     *
      * The request validator attaches request body validation to the request
      * handler for a path.
      *
@@ -137,29 +140,13 @@ export const compeller = <
      */
     const validateRequestBody = <
       SC extends Request['requestBody']['content'][ContentType]['schema']
-    >() => {
-      const {
-        requestBody: {
-          content: { [contentType]: { schema = undefined } = {} } = {},
-        } = {},
-      } = spec.paths[path][method];
-
-      // TODO: We need to handle the request which do not have a requestBody
-      //
-      // Some users might abstract the functional components into a generic
-      // wrapper, therefore gets might hit the validator path
-      //
-      // We don't want to lose type safety
-      const unsafeSchema = (schema || {}) as JSONSchemaType<FromSchema<SC>>;
-
-      const ajv = new Ajv({
-        allErrors: true,
-      });
-
-      return ajv.compile<FromSchema<SC>>(unsafeSchema);
+    >(
+      schema: Record<string, unknown>
+    ) => {
+      return requestBodyValidator<SC>(schema);
     };
 
-    const validator = validateRequestBody();
+    const validator = validateRequestBody(schema);
 
     return {
       response,
