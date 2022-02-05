@@ -1,14 +1,7 @@
-import Ajv, { JSONSchemaType, ValidateFunction } from 'ajv';
 import { FromSchema } from 'json-schema-to-ts';
-import {
-  OpenAPIObject,
-  ParameterObject,
-  PathItemObject,
-  ReferenceObject,
-} from 'openapi3-ts';
-
-import { defaultResponder } from './responders';
+import { OpenAPIObject } from 'openapi3-ts';
 import { writeSpecification } from './file-utils/write-specification';
+import { defaultResponder } from './responders';
 import { requestBodyValidator } from './validators';
 
 export interface ICompellerOptions {
@@ -89,7 +82,8 @@ export const compeller = <
     RequestPath extends keyof T['paths'],
     RequestMethod extends keyof T['paths'][RequestPath],
     Responses extends T['paths'][RequestPath][RequestMethod]['responses'],
-    Request extends T['paths'][RequestPath][RequestMethod]
+    Request extends T['paths'][RequestPath][RequestMethod],
+    Parameters extends T['paths'][RequestPath][RequestMethod]['parameters']
   >(
     route: RequestPath,
     method: RequestMethod
@@ -100,7 +94,7 @@ export const compeller = <
         content: { [contentType]: { schema = undefined } = {} } = {},
       } = {},
     } = spec.paths[path][method];
-    const { parameters } = spec.paths[path][method] as PathItemObject;
+    const parameters = spec.paths[path][method].parameters as Parameters;
 
     /**
      * Build a response object for the API with the required status and body
@@ -155,39 +149,26 @@ export const compeller = <
     /**
      * The parameters validator validates the parameters section of the template
      * and returns the parameters object, or a schema with errors
+     [
+        {
+          name: 'limit',
+          in: 'query',
+          required: false,
+          schema: {
+            type: 'integer',
+            format: 'int32',
+          },
+        }
+      ]
      */
     const validateRequestParameters = <
-      Parameters extends Request['parameters'],
-      AllowedParameters extends Array<
-        Parameters[number] extends ParameterObject ? Parameters[number] : never
-      >
+      Parameters extends Request['parameters']
     >(
       parameters: Parameters
-    ): AllowedParameters => {
-      const removeRefTypes = <T extends Parameters[number]>(
-        param: T
-      ): T extends ParameterObject ? T : never => {
-        if (param.$ref) {
-          throw Error('Only parameter types are supported');
-        }
-        return param;
+    ) => {
+      return parameters as {
+        [key in Parameters[number]['name']]: Parameters[number]['schema'];
       };
-
-      return parameters;
-
-      // Parameters is an array
-      // Each member can be a Ref or Param Obj
-      // We want to return a type as
-      // { [key: P[number]['name']]: ValidateFunction<P[number]['schema'] }
-
-      // Mapped type of parameters
-      // type Validators<T extends keyof Parameters> = {
-      //   [key in T]: ValidateFunction<
-      //     JSONSchemaType<FromSchema<Parameters[T]['schema']>>
-      //   >;
-      // };
-
-      // return (p: Parameters[number]) => {};
     };
 
     const validateBody = validateRequestBody(schema);

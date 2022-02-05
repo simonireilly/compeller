@@ -18,8 +18,8 @@ export const OpenAPISpecification = {
             required: true,
             schema: {
               type: 'number',
-            } as JSONSchema,
-          } as ParameterObject,
+            } as const,
+          } as const,
           {
             name: 'tags',
             in: 'query',
@@ -31,7 +31,7 @@ export const OpenAPISpecification = {
               items: {
                 type: 'string',
               },
-            },
+            } as const,
           } as const,
           {
             name: 'limit',
@@ -43,7 +43,7 @@ export const OpenAPISpecification = {
               format: 'int32',
             },
           } as const,
-        ],
+        ] as const,
         responses: {
           '201': {
             description: 'Get the current API version',

@@ -8,7 +8,7 @@ const { response, request } = defaultCompeller('v1/users/{id}', 'post');
 // JSON Schema body validation
 request.validateBody({});
 // Validate path and query object
-// request.validateParameters[0].;
+console.info(request.validateParameters);
 // Validate headers
 // request.validateHeaders({ 'x-api-key': '123aef-231' });
 
