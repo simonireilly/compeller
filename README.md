@@ -34,8 +34,14 @@ npx compeller@alpha new
 - [x] Support for request body validation to type guard (ajv)
 - [x] Support for header response types
 - [ ] Support for response type mapping
-- [ ] Support for path validation
-- [ ] Support header validation
+  - [ ] Return the response statusCode
+  - [ ] Return the response headers
+  - [ ] Return the response body
+- [ ] Support Parameter validation of request parameters within the OpenAPI specification.
+  - [ ] Support path validation
+  - [ ] Support header validation
+  - [ ] Support query validation
+  - [ ] Support cookie validation
 
 ### Usage
 

@@ -19,8 +19,9 @@ const spec = {
             required: false,
             schema: {
               type: 'integer',
-              // format: 'int32',
-            },
+              maximum: 10,
+              minimum: 0
+            } as const,
           },
         ],
         responses: {
@@ -80,12 +81,14 @@ describe('API Compiler tests', () => {
   });
 
   describe('parameter validation', () => {
-    xit('has schema validation for each parameter', () => {
+    it('has schema validation for each parameter', () => {
       const compelled = compeller(spec);
 
       const { request } = compelled('/test', 'get');
 
-      expect(request.validateParameters).toEqual({});
+      expect(request.validateParameters({
+        limit: 200
+      })).toEqual(false);
     });
   });
 });
