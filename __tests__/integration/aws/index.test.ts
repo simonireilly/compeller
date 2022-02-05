@@ -9,14 +9,14 @@ const { response, request } = API('/pets', 'post');
 export const handler = (data: Record<string, unknown>) => {
   let body = data;
 
-  if (request.validator(body)) {
+  if (request.validateBody(body)) {
     console.info('Type-safe object destructured from post request', {
       name: body.name,
     });
 
     return response('201', {});
   } else {
-    const { errors } = request.validator;
+    const { errors } = request.validateBody;
 
     if (errors) {
       return response('422', {

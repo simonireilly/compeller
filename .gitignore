@@ -1,11 +1,11 @@
 node_modules
 
 dist
+tmp
+coverage
 
 *.tgz
-
-tmp
-
 *.tsbuildinfo
 *.test.js
 *.test.d.ts
+*.log

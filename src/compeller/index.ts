@@ -1,9 +1,8 @@
-import Ajv, { JSONSchemaType } from 'ajv';
 import { FromSchema } from 'json-schema-to-ts';
 import { OpenAPIObject } from 'openapi3-ts';
-
-import { defaultResponder } from './responders';
 import { writeSpecification } from './file-utils/write-specification';
+import { defaultResponder } from './responders';
+import { requestBodyValidator } from './validators';
 
 export interface ICompellerOptions {
   /**
@@ -83,15 +82,21 @@ export const compeller = <
     RequestPath extends keyof T['paths'],
     RequestMethod extends keyof T['paths'][RequestPath],
     Responses extends T['paths'][RequestPath][RequestMethod]['responses'],
-    Request extends T['paths'][RequestPath][RequestMethod]
+    Request extends T['paths'][RequestPath][RequestMethod],
+    Parameters extends T['paths'][RequestPath][RequestMethod]['parameters']
   >(
     route: RequestPath,
     method: RequestMethod
   ) => {
     const path = route as string;
+    const {
+      requestBody: {
+        content: { [contentType]: { schema = undefined } = {} } = {},
+      } = {},
+    } = spec.paths[path][method];
+    const parameters = spec.paths[path][method].parameters as Parameters;
 
     /**
-     *
      * Build a response object for the API with the required status and body
      * format
      *
@@ -128,8 +133,6 @@ export const compeller = <
     };
 
     /**
-     * TODO - Validators need to be abstracted like responders
-     *
      * The request validator attaches request body validation to the request
      * handler for a path.
      *
@@ -137,34 +140,45 @@ export const compeller = <
      */
     const validateRequestBody = <
       SC extends Request['requestBody']['content'][ContentType]['schema']
-    >() => {
-      const {
-        requestBody: {
-          content: { [contentType]: { schema = undefined } = {} } = {},
-        } = {},
-      } = spec.paths[path][method];
-
-      // TODO: We need to handle the request which do not have a requestBody
-      //
-      // Some users might abstract the functional components into a generic
-      // wrapper, therefore gets might hit the validator path
-      //
-      // We don't want to lose type safety
-      const unsafeSchema = (schema || {}) as JSONSchemaType<FromSchema<SC>>;
-
-      const ajv = new Ajv({
-        allErrors: true,
-      });
-
-      return ajv.compile<FromSchema<SC>>(unsafeSchema);
+    >(
+      schema: Record<string, unknown>
+    ) => {
+      return requestBodyValidator<SC>(schema);
     };
 
-    const validator = validateRequestBody();
+    /**
+     * The parameters validator validates the parameters section of the template
+     * and returns the parameters object, or a schema with errors
+     [
+        {
+          name: 'limit',
+          in: 'query',
+          required: false,
+          schema: {
+            type: 'integer',
+            format: 'int32',
+          },
+        }
+      ]
+     */
+    const validateRequestParameters = <
+      Parameters extends Request['parameters']
+    >(
+      parameters: Parameters
+    ) => {
+      return parameters as {
+        [key in Parameters[number]['name']]: Parameters[number]['schema'];
+      };
+    };
+
+    const validateBody = validateRequestBody(schema);
+    const validateParameters = validateRequestParameters(parameters);
 
     return {
       response,
       request: {
-        validator,
+        validateBody,
+        validateParameters,
       },
     };
   };
