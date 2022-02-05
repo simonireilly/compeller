@@ -1,6 +1,11 @@
-import Ajv, { JSONSchemaType } from 'ajv';
+import Ajv, { JSONSchemaType, ValidateFunction } from 'ajv';
 import { FromSchema } from 'json-schema-to-ts';
-import { OpenAPIObject } from 'openapi3-ts';
+import {
+  OpenAPIObject,
+  ParameterObject,
+  PathItemObject,
+  ReferenceObject,
+} from 'openapi3-ts';
 
 import { defaultResponder } from './responders';
 import { writeSpecification } from './file-utils/write-specification';
@@ -95,6 +100,7 @@ export const compeller = <
         content: { [contentType]: { schema = undefined } = {} } = {},
       } = {},
     } = spec.paths[path][method];
+    const { parameters } = spec.paths[path][method] as PathItemObject;
 
     /**
      * Build a response object for the API with the required status and body
@@ -146,12 +152,52 @@ export const compeller = <
       return requestBodyValidator<SC>(schema);
     };
 
-    const validator = validateRequestBody(schema);
+    /**
+     * The parameters validator validates the parameters section of the template
+     * and returns the parameters object, or a schema with errors
+     */
+    const validateRequestParameters = <
+      Parameters extends Request['parameters'],
+      AllowedParameters extends Array<
+        Parameters[number] extends ParameterObject ? Parameters[number] : never
+      >
+    >(
+      parameters: Parameters
+    ): AllowedParameters => {
+      const removeRefTypes = <T extends Parameters[number]>(
+        param: T
+      ): T extends ParameterObject ? T : never => {
+        if (param.$ref) {
+          throw Error('Only parameter types are supported');
+        }
+        return param;
+      };
+
+      return parameters;
+
+      // Parameters is an array
+      // Each member can be a Ref or Param Obj
+      // We want to return a type as
+      // { [key: P[number]['name']]: ValidateFunction<P[number]['schema'] }
+
+      // Mapped type of parameters
+      // type Validators<T extends keyof Parameters> = {
+      //   [key in T]: ValidateFunction<
+      //     JSONSchemaType<FromSchema<Parameters[T]['schema']>>
+      //   >;
+      // };
+
+      // return (p: Parameters[number]) => {};
+    };
+
+    const validateBody = validateRequestBody(schema);
+    const validateParameters = validateRequestParameters(parameters);
 
     return {
       response,
       request: {
-        validator,
+        validateBody,
+        validateParameters,
       },
     };
   };

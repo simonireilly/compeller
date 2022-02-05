@@ -1,4 +1,5 @@
-import { OpenAPIObject } from 'openapi3-ts';
+import { JSONSchema } from 'json-schema-to-ts';
+import { ParameterObject } from 'openapi3-ts';
 
 export const OpenAPISpecification = {
   info: {
@@ -17,8 +18,8 @@ export const OpenAPISpecification = {
             required: true,
             schema: {
               type: 'number',
-            },
-          },
+            } as JSONSchema,
+          } as ParameterObject,
           {
             name: 'tags',
             in: 'query',
@@ -31,7 +32,7 @@ export const OpenAPISpecification = {
                 type: 'string',
               },
             },
-          },
+          } as const,
           {
             name: 'limit',
             in: 'query',
@@ -41,7 +42,7 @@ export const OpenAPISpecification = {
               type: 'integer',
               format: 'int32',
             },
-          },
+          } as const,
         ],
         responses: {
           '201': {

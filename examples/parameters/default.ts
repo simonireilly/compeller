@@ -3,7 +3,16 @@ import { OpenAPISpecification } from './openapi/spec';
 
 const defaultCompeller = compeller(OpenAPISpecification);
 
-const res = defaultCompeller('v1/users/{id}', 'post').response(
+const { response, request } = defaultCompeller('v1/users/{id}', 'post');
+
+// JSON Schema body validation
+request.validateBody({});
+// Validate path and query object
+// request.validateParameters[0].;
+// Validate headers
+// request.validateHeaders({ 'x-api-key': '123aef-231' });
+
+const res = response(
   '201',
   {
     version: '1.0.0',

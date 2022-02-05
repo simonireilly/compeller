@@ -11,6 +11,18 @@ const spec = {
   paths: {
     '/test': {
       get: {
+        parameters: [
+          {
+            name: 'limit',
+            in: 'query',
+            description: 'How many items to return at one time (max 100)',
+            required: false,
+            schema: {
+              type: 'integer',
+              // format: 'int32',
+            },
+          },
+        ],
         responses: {
           '200': {
             description: 'Test response',
@@ -38,9 +50,9 @@ const spec = {
 describe('API Compiler tests', () => {
   describe('get requests', () => {
     it('requires a valid API document', () => {
-      const stuff = compeller(spec);
+      const compelled = compeller(spec);
 
-      const { response } = stuff('/test', 'get');
+      const { response } = compelled('/test', 'get');
 
       const resp = response('200', { name: 'Type-safe reply' });
 
@@ -51,12 +63,12 @@ describe('API Compiler tests', () => {
     });
 
     it('keeps a local specification json when true', () => {
-      const stuff = compeller(spec, {
+      const compelled = compeller(spec, {
         jsonSpecFile: join(__dirname, 'tmp', 'openapi.json'),
         responder: defaultResponder,
       });
 
-      const { response } = stuff('/test', 'get');
+      const { response } = compelled('/test', 'get');
 
       const resp = response('200', { name: 'Type-safe reply' });
 
@@ -64,6 +76,16 @@ describe('API Compiler tests', () => {
         body: { name: 'Type-safe reply' },
         statusCode: '200',
       });
+    });
+  });
+
+  describe('parameter validation', () => {
+    xit('has schema validation for each parameter', () => {
+      const compelled = compeller(spec);
+
+      const { request } = compelled('/test', 'get');
+
+      expect(request.validateParameters).toEqual({});
     });
   });
 });
