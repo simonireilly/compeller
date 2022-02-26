@@ -1,5 +1,5 @@
 ---
-to: <%= directory %>/openapi/schemas/version.schema.ts
+to: <%= directory %>/openapi/components/schemas/version.schema.ts
 ---
 import { FromSchema } from 'json-schema-to-ts';
 
