@@ -1,7 +1,7 @@
 ---
 to: <%= directory %>/openapi/spec.ts
 ---
-import { VersionSchema } from './schemas/version.schema';
+import { versionPath } from './paths/version.path';
 
 export const OpenAPISpecification = {
   info: {
@@ -10,19 +10,6 @@ export const OpenAPISpecification = {
   },
   openapi: '3.1.0',
   paths: {
-    'v1/version': {
-      get: {
-        responses: {
-          '200': {
-            description: 'Get the current API version',
-            content: {
-              'application/json': {
-                schema: VersionSchema,
-              },
-            },
-          },
-        },
-      },
-    },
+    ...versionPath
   },
 };
